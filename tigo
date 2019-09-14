@@ -10,8 +10,19 @@ EndComments
 prereq_vars() { # Sanity checks and program
 	
 	vars_setup() { # Setup sane default vars
-		:
+		# Setup 
+		readonly ME=${0##*/}
+
+		# Discover where we are where we ran from and source our extras
+		BASEDIR="$(dirname "$(readlink -f "$0" )")"
+		if [[ -n "$BASEDIR" ]]; then
+			cd "$BASEDIR" 2>/dev/null || { 
+				echo "$ME: Failed to change directory"
+				exit 1
+			}
+		fi
 	} 
+
 	prereq() {	# Check for and setup binaries required to run
 
 		# Required binaries to run
@@ -23,9 +34,9 @@ prereq_vars() { # Sanity checks and program
 						# Using declare in a function is defaulted to local
 
 		# Loop though required binaries and set then to tb
-		printf "%s\n" "Checking for required binaries"
+		printf "$ME: %s\n" "CHECKING FOR REQUIRED BINARIES"
 		for check in "${tigo_bins[@]}"; do
-			printf "%8s: " "$check"
+			printf "$ME: %8s: " "$check"
 			tigo_bins_path=$(which "$check" 2> /dev/null)
 			if [[ -n "$tigo_bins_path" ]]; then
 				printf "%s %s\n" "GOOD" "$tigo_bins_path"
@@ -41,14 +52,16 @@ prereq_vars() { # Sanity checks and program
 
 		# Present the results of the req binary test
 		if [[ "${#tigo_bins[@]}" -eq "$itishere" ]]; then
-			printf "All binaries available\n"
+			printf "$ME: All binaries available\n"
 		else
-			printf "Binaries missing: %s\n" "$ainthere"
-			sleep 1
+			printf "$ME: Binaries missing: %s\n" "$ainthere"
 			exit 1
 		fi
+
 	}
 
+	# Setup default vars and check for binaries
+	vars_setup
 	prereq
 
 }
