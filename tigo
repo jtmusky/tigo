@@ -6,3 +6,43 @@ LICNESE:	GPL 3.0
 Purpose:	Wrapper script using dialog to open and close git repos with tig
 
 EndComments
+
+prereq_vars() { # Sanity checks and program
+
+	# Required binaries to run
+	local tigo_bins=( dialog tig git curl tput )
+
+	# Setup temp vars
+	local itishere=0 ainthere=0 tigo_bins_path
+	declare -gA tb 	# Associative Array for the binaries and set as global
+					# Using declare in a function is defaulted to local
+
+	# Loop though required binaries and set then to tb
+	printf "%s\n" "Checking for required binaries"
+	for check in "${tigo_bins[@]}"; do
+		printf "%8s: " "$check"
+		tigo_bins_path=$(which "$check" 2> /dev/null)
+		if [[ -n "$tigo_bins_path" ]]; then
+			printf "%s %s\n" "GOOD" "$tigo_bins_path"
+
+			# Assign key=value to the associative array, if present
+			tb+=(["$check"]="$tigo_bins_path")
+			(( itishere++ ))
+		else
+			printf "%s\n" "Missing"
+			(( ainthere++ ))
+		fi
+	done
+
+	# Present the results of the req binary test
+	if [[ "${#tigo_bins[@]}" -eq "$itishere" ]]; then
+		printf "All binaries available\n"
+	else
+		printf "Binaries missing: %s\n" "$ainthere"
+		sleep 1
+		exit 1
+	fi
+
+}
+
+prereq_vars								# Pre setup for the script
