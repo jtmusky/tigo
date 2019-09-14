@@ -1,0 +1,8 @@
+#!/bin/bash
+: << 'EndComments'
+
+Author:		Justin Musgrove
+LICNESE:	GPL 3.0
+Purpose:	Wrapper script using dialog to open and close git repos with tig
+
+EndComments
