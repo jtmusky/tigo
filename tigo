@@ -77,8 +77,8 @@ prereq_vars() { # Sanity checks and program
 	}
 
 	# Setup default vars and check for binaries
-	vars_setup
 	prereq
+	vars_setup
 
 }
 
