@@ -30,12 +30,6 @@ prereq_vars() { # Sanity checks and program
 
 		# Discover where we are where we ran from and source our extras
 		BASEDIR="$(dirname "$(readlink -f "$0" )")"
-		if [[ -n "$BASEDIR" ]]; then
-			cd "$BASEDIR" 2>/dev/null || { 
-				echo "$ME: Failed to change directory"
-				exit 1
-			}
-		fi
 	} 
 
 	prereq() {	# Check for and setup binaries required to run
