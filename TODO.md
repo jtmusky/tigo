@@ -2,11 +2,11 @@
 
 ## Requirements
 [ ] Double check that directory is a git repo
-[ ] Goback to previous git repo "Last Repo used" 
+[ ] Go back to previous git repo "Last Repo used" 
 [ ] Display oneflow guide
 [ ] Ask user to use default tigrc
 [ ] Display the what branch the the repo is currently in
-[ ] Save .tigorc dir for consistancy
+[ ] Save .tigorc dir for consistency
 
 ## Nice to have
 [ ] Check for upgrades

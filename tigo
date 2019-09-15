@@ -27,13 +27,14 @@ prereq_vars() { # Sanity checks and program
 	vars_setup() { # Setup sane default vars
 		# Setup 
 		readonly ME=${0##*/}
+		readonly tigo_version=0.0.1
 
 		# Discover where we are where we ran from and source our extras
 		BASEDIR="$(dirname "$(readlink -f "$0" )")"
 
 		# Read in all the function libraries
 		for script in $BASEDIR/share/[a-z]*.sh ; do
-		    . $script
+		    . "$script"
 		done
 
 	} 
@@ -67,9 +68,9 @@ prereq_vars() { # Sanity checks and program
 
 		# Present the results of the req binary test
 		if [[ "${#tigo_bins[@]}" -eq "$itishere" ]]; then
-			printf "$ME: All binaries available\n"
+			printf "%s: %s\n" "$ME" "All binaries available"
 		else
-			printf "$ME: Binaries missing: %s\n" "$ainthere"
+			printf "%s: %s\n" "$ME" "Binaries missing: $ainthere"
 			exit 1
 		fi
 
